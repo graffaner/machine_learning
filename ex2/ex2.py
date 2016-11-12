@@ -2,7 +2,7 @@
 
 import numpy as np
 import pandas as pd
-from bokeh.plotting import figure, output_notebook, show
+from bokeh.plotting import figure, output_notebook, output_file, show
 from os import getcwd
 from scipy.optimize import minimize
 
@@ -134,26 +134,24 @@ def main():
     exam2_bound = (theta_opt_1[0]+theta_opt_1[1]*exam1_bound)/(-theta_opt_1[2])
 
     # plotting
+    # output to static HTML file
+    output_file("ex2_data1_classification.html")
     p = figure(
         tools='pan, reset, box_zoom, save',
         x_axis_label='exam1',
         y_axis_label='exam2'
     )
-
     p.circle(
         data1[data1['admission']==0]['exam1'],
         data1[data1['admission']==0]['exam2'], size=5,
         legend='not admitted'
     )
-
     p.cross(
         data1[data1['admission']==1]['exam1'],
         data1[data1['admission']==1]['exam2'], color='red',
         size=10, legend='admitted'
     )
-
     p.line(exam1_bound, exam2_bound, legend='boundary', color='green')
-
     show(p)
 
 
